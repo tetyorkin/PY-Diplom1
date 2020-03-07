@@ -10,6 +10,7 @@ VERSION_API = '5.103'
 main_user = '171691064'
 
 
+# Клас для обработки ошибки при обращении к vk api
 class VkApiError(Exception):
     def __init__(self, text):
         self.txt = text
@@ -74,7 +75,6 @@ def group_info(user_id):
                 time.sleep(0.5)
                 error = response.json()['error']['error_msg']
                 raise VkApiError(f'Ошибка! {error}')
-
             for dict_group in response.json()['response']:
                 name = dict_group['name']
                 gid = dict_group['id']
