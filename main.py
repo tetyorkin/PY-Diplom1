@@ -83,7 +83,6 @@ def group_info(user_id):
                 to_json_list.append(to_json_1)
         except VkApiError as msg:
             print(msg)
-
     return to_json_list
 
 
