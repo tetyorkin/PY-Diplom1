@@ -45,13 +45,19 @@ def entry_user(user_id):
             'filter': 'friends',
             'v': VERSION_API
         }
-        response = requests.get(url, params=params)
-        # print(response.json())
-        count = response.json()['response']['count']
-        print('.')
-        time.sleep(0.5)
-        if count == 0:
-            ex_group_list.append(group_id)
+        try:
+            response = requests.get(url, params=params)
+            if 'error' in response.json().keys():
+                time.sleep(0.5)
+                error = response.json()['error']['error_msg']
+                raise VkApiError(f'Ошибка! {error}')
+            count = response.json()['response']['count']
+            print('.')
+            time.sleep(0.5)
+            if count == 0:
+                ex_group_list.append(group_id)
+        except VkApiError as msg:
+            print(msg)
     return ex_group_list
 
 
